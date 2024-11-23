@@ -1,5 +1,6 @@
 package com.rayhdf.sugarcareapp.ui.login
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -18,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.rayhdf.sugarcareapp.ui.theme.SugarCareAppTheme
 import com.rayhdf.sugarcareapp.ui.composables.SignInWithGoogleButton
+import com.rayhdf.sugarcareapp.ui.home.HomeActivity
 import com.rayhdf.sugarcareapp.ui.theme.primaryLight
 
 
@@ -26,13 +28,18 @@ class LoginActivity : ComponentActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContent {
-            LoginScreen()
+            LoginScreen(onSignInClick = { navigateToHome() })
         }
+    }
+
+    private fun navigateToHome() {
+        val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+        startActivity(intent)
     }
 }
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(onSignInClick: () -> Unit) {
     SugarCareAppTheme {
         Column(
             verticalArrangement = Arrangement.Center,
@@ -48,7 +55,7 @@ fun LoginScreen() {
                 color = primaryLight
             )
             Text("Login Activity", color = Color.Transparent)
-            SignInWithGoogleButton(onClick = {})
+            SignInWithGoogleButton(onClick = onSignInClick)
         }
     }
 }
@@ -56,5 +63,5 @@ fun LoginScreen() {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    LoginScreen()
+    LoginScreen(onSignInClick = {})
 }
