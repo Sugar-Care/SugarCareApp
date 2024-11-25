@@ -17,6 +17,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -37,7 +38,8 @@ fun ProfileScreen(modifier: Modifier = Modifier, viewModel: ProfileViewModel = v
             contentDescription = "Profile Icon",
             modifier = Modifier.size(48.dp)
         )
-        Text("Your Name", fontSize = 24.sp)
+        Text("Your Name", fontSize = 24.sp,
+            fontWeight = FontWeight.Bold)
 
         Spacer(modifier = Modifier.height(16.dp))
         HorizontalDivider(color = primaryLight)
@@ -77,5 +79,4 @@ fun PreviewProfile() {
     SugarCareAppTheme {
         ProfileScreen()
     }
-
 }

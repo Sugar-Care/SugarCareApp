@@ -15,6 +15,6 @@ fun PredictScreen() {
         verticalArrangement = Arrangement.Center,
         modifier = Modifier.fillMaxSize()
     ) {
-        LazyColumn() {  }
+
     }
 }
