@@ -1,4 +1,4 @@
-package com.rayhdf.sugarcareapp.ui.home
+package com.rayhdf.sugarcareapp.ui.home.predict
 
 import androidx.lifecycle.ViewModel
 

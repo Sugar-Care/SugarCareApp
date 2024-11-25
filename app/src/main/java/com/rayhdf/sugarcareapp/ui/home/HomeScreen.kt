@@ -6,6 +6,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Icon
 
 import androidx.compose.material3.NavigationBar
@@ -14,7 +15,11 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.rayhdf.sugarcareapp.ui.home.predict.PredictScreen
+import com.rayhdf.sugarcareapp.ui.home.profile.ProfileScreen
+import com.rayhdf.sugarcareapp.ui.home.track.TrackScreen
 
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = viewModel()) {
@@ -22,9 +27,9 @@ fun HomeScreen(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = vie
     val navItemList = listOf(
         NavItem("Home", Icons.Default.Home),
         NavItem("Track", Icons.Default.DateRange),
-        NavItem("Predict", Icons.Default.KeyboardArrowUp)
+        NavItem("Predict", Icons.Default.KeyboardArrowUp),
+        NavItem("Profile", Icons.Default.Person)
     )
-
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -47,7 +52,7 @@ fun HomeScreen(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = vie
             }
         }
     ) { innerPadding ->
-        ContentScreen(modifier = Modifier.padding(innerPadding), homeViewModel.selectedIndex)
+        ContentScreen(modifier = Modifier.padding(innerPadding).padding(16.dp), homeViewModel.selectedIndex)
     }
 }
 
@@ -56,6 +61,7 @@ fun ContentScreen(modifier: Modifier = Modifier, selectedIndex : Int) {
     when (selectedIndex) {
         1 -> TrackScreen()
         2 -> PredictScreen()
+        3 -> ProfileScreen(modifier)
     }
 
 }

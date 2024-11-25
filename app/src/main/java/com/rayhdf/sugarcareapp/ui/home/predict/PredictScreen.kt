@@ -1,9 +1,9 @@
-package com.rayhdf.sugarcareapp.ui.home
+package com.rayhdf.sugarcareapp.ui.home.predict
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Text
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,6 +15,6 @@ fun PredictScreen() {
         verticalArrangement = Arrangement.Center,
         modifier = Modifier.fillMaxSize()
     ) {
-        Text("PredictScreen")
+        LazyColumn() {  }
     }
 }
