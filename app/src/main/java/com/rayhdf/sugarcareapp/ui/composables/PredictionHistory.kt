@@ -1,6 +1,5 @@
 package com.rayhdf.sugarcareapp.ui.composables
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Text
@@ -50,7 +49,7 @@ fun PredictionHistory(
                 fontWeight = FontWeight.Medium,
                 fontSize = 24.sp,
                 color = color,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(2f)
             )
         }
     }
