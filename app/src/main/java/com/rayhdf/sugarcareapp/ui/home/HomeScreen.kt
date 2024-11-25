@@ -60,7 +60,7 @@ fun HomeScreen(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = vie
 fun ContentScreen(modifier: Modifier = Modifier, selectedIndex : Int) {
     when (selectedIndex) {
         1 -> TrackScreen()
-        2 -> PredictScreen()
+        2 -> PredictScreen(modifier)
         3 -> ProfileScreen(modifier)
     }
 
