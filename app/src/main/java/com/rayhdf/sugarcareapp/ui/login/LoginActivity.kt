@@ -19,7 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.rayhdf.sugarcareapp.ui.theme.SugarCareAppTheme
 import com.rayhdf.sugarcareapp.ui.composables.SignInWithGoogleButton
-import com.rayhdf.sugarcareapp.ui.home.HomeActivity
+import com.rayhdf.sugarcareapp.ui.register.RegisterActivity
 import com.rayhdf.sugarcareapp.ui.theme.primaryLight
 
 
@@ -33,7 +33,7 @@ class LoginActivity : ComponentActivity() {
     }
 
     private fun navigateToHome() {
-        val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+        val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
         startActivity(intent)
     }
 }
