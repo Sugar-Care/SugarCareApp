@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 import com.rayhdf.sugarcareapp.ui.theme.SugarCareAppTheme
 import com.rayhdf.sugarcareapp.ui.composables.SignInWithGoogleButton
+import com.rayhdf.sugarcareapp.ui.home.HomeActivity
 import com.rayhdf.sugarcareapp.ui.register.RegisterActivity
 import com.rayhdf.sugarcareapp.ui.theme.primaryLight
 
@@ -28,18 +29,23 @@ class LoginActivity : ComponentActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContent {
-            LoginScreen(onSignInClick = { navigateToHome() })
+            LoginScreen(onSignInClick = { navigateToRegister() }, onSignIn2Click = { navigateToHome() })
         }
     }
 
-    private fun navigateToHome() {
+    private fun navigateToRegister() {
         val intent = Intent(this@LoginActivity, RegisterActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun navigateToHome() {
+        val intent = Intent(this@LoginActivity, HomeActivity::class.java)
         startActivity(intent)
     }
 }
 
 @Composable
-fun LoginScreen(onSignInClick: () -> Unit) {
+fun LoginScreen(onSignInClick: () -> Unit, onSignIn2Click: () -> Unit) {
     SugarCareAppTheme {
         Column(
             verticalArrangement = Arrangement.Center,
@@ -56,6 +62,9 @@ fun LoginScreen(onSignInClick: () -> Unit) {
             )
             Text("Login Activity", color = Color.Transparent)
             SignInWithGoogleButton(onClick = onSignInClick)
+
+            Text("v Langsung ke home v")
+            SignInWithGoogleButton(onClick = onSignIn2Click)
         }
     }
 }
@@ -63,5 +72,5 @@ fun LoginScreen(onSignInClick: () -> Unit) {
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
-    LoginScreen(onSignInClick = {})
+    LoginScreen(onSignInClick = {}, onSignIn2Click = {})
 }
