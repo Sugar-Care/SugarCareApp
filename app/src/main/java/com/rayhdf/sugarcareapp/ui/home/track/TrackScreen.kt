@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -49,7 +50,7 @@ fun TrackScreen(modifier: Modifier) {
                     modifier = Modifier.fillMaxSize()
                 ) {
                     Text(
-                        "Blood Sugar",
+                        "Sugar Intake",
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Medium,
                         modifier = Modifier
@@ -79,7 +80,7 @@ fun TrackScreen(modifier: Modifier) {
                 modifier = Modifier.fillMaxSize()
             ) {
                 Text(
-                    "Food",
+                    "Weight",
                     fontSize = 24.sp,
                     fontWeight = FontWeight.Medium,
                     modifier = Modifier
@@ -96,6 +97,11 @@ fun TrackScreen(modifier: Modifier) {
                 )
             }
         }
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(
+            modifier = Modifier,
+            onClick = {}
+        ) { Text("Get Recommendations") }
     }
 }
 
