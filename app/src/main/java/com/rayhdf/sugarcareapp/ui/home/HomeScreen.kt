@@ -1,7 +1,6 @@
 package com.rayhdf.sugarcareapp.ui.home
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -16,10 +15,10 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.rayhdf.sugarcareapp.ui.home.first.FirstScreen
 import com.rayhdf.sugarcareapp.ui.home.predict.PredictScreen
 import com.rayhdf.sugarcareapp.ui.home.profile.ProfileScreen
 import com.rayhdf.sugarcareapp.ui.home.track.TrackScreen
@@ -55,31 +54,20 @@ fun HomeScreen(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = vie
             }
         }
     ) { innerPadding ->
-        ContentScreen(modifier = Modifier
-            .padding(innerPadding)
-            .padding(16.dp), homeViewModel.selectedIndex)
+        ContentScreen(
+            modifier = Modifier
+                .padding(innerPadding)
+                .padding(16.dp), homeViewModel.selectedIndex
+        )
     }
 }
 
 @Composable
-fun ContentScreen(modifier: Modifier = Modifier, selectedIndex : Int) {
+fun ContentScreen(modifier: Modifier = Modifier, selectedIndex: Int) {
     when (selectedIndex) {
         0 -> FirstScreen(modifier)
         1 -> TrackScreen(modifier)
         2 -> PredictScreen(modifier)
         3 -> ProfileScreen(modifier)
-    }
-}
-
-@Composable
-fun FirstScreen(modifier: Modifier = Modifier) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = modifier
-            .fillMaxSize()
-            .padding(top = 32.dp)
-    ) {
-        Text("Home Screen")
     }
 }
