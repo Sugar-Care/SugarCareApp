@@ -8,10 +8,19 @@ import retrofit2.create
 object RetrofitInstance {
 
     private const val BASE_URL_USER = BuildConfig.BASE_URL_USER
+    private const val BASE_URL_PREDICT = BuildConfig.BASE_URL_PREDICT
 
-    val api: ApiService by lazy {
+    val userApi: ApiService by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL_USER)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(ApiService::class.java)
+    }
+
+    val predictApi: ApiService by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL_PREDICT)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ApiService::class.java)

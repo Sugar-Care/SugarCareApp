@@ -25,14 +25,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.rayhdf.sugarcareapp.ui.composables.PredictionHistory
 import com.rayhdf.sugarcareapp.ui.theme.errorLight
 import com.rayhdf.sugarcareapp.ui.theme.primaryLight
 import com.rayhdf.sugarcareapp.ui.theme.surfaceContainerHighestLightHighContrast
 
-@Preview
 @Composable
-fun PredictScreen(modifier: Modifier = Modifier) {
+fun PredictScreen(modifier: Modifier = Modifier, navController: NavController) {
 
     val predictItems = listOf(
         PredictItem("1-10-2019", "Healthy"),
@@ -55,7 +55,7 @@ fun PredictScreen(modifier: Modifier = Modifier) {
             Text("Prediction", fontWeight = FontWeight.Bold, fontSize = 20.sp)
             Icon(imageVector = Icons.Default.Add, contentDescription = "Add",
                 modifier = Modifier.clickable {
-                // TBA
+                    navController.navigate("PredictInput")
                  })
         }
         Spacer(modifier = Modifier.height(16.dp))
