@@ -26,6 +26,7 @@ import androidx.navigation.compose.rememberNavController
 import com.rayhdf.sugarcareapp.ui.home.first.FirstScreen
 import com.rayhdf.sugarcareapp.ui.home.predict.PredictInputScreen
 import com.rayhdf.sugarcareapp.ui.home.predict.PredictInputViewModel
+import com.rayhdf.sugarcareapp.ui.home.predict.PredictResultScreen
 import com.rayhdf.sugarcareapp.ui.home.predict.PredictScreen
 import com.rayhdf.sugarcareapp.ui.home.profile.ProfileScreen
 import com.rayhdf.sugarcareapp.ui.home.track.TrackScreen
@@ -73,7 +74,8 @@ fun HomeScreen(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = vie
                 composable("Track") { TrackScreen(modifier) }
                 composable("Predict") { PredictScreen(modifier, navController) }
                 composable("Profile") { ProfileScreen(modifier) }
-                composable("PredictInput") { PredictInputScreen(viewModel = remember { PredictInputViewModel() }) }
+                composable("PredictInput") { PredictInputScreen(viewModel = remember { PredictInputViewModel() }, navController = navController)  }
+                composable("PredictResult") { PredictResultScreen(modifier) }
             }
         }
     }

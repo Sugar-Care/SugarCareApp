@@ -1,10 +1,14 @@
 package com.rayhdf.sugarcareapp.ui.home.predict
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.rayhdf.sugarcareapp.data.model.PredictRequest
+import com.rayhdf.sugarcareapp.data.repository.UserRepository
+import kotlinx.coroutines.launch
 
 class PredictInputViewModel(
 ) : ViewModel() {
@@ -18,6 +22,8 @@ class PredictInputViewModel(
     var cholesterolLevels by mutableStateOf("1.0")
     var digestiveEnzymeLevels by mutableStateOf("1.0")
     var pulmonaryFunction by mutableStateOf("1.0")
+
+    private val userRepository = UserRepository()
 
     fun toPredictRequest(): PredictRequest {
         return PredictRequest(
@@ -35,4 +41,21 @@ class PredictInputViewModel(
             )
         )
     }
+
+    fun predict(onResult: (String) -> Unit, onSuccess: () -> Unit) {
+        viewModelScope.launch {
+            try {
+                val userId = "MOkL2e0ZDUf8zboWxZvc"
+                val response = userRepository.predict(userId, toPredictRequest())
+                if (response.result?.message == "Prediction stored successfully") {
+                    Log.d("Predict", "$response bang")
+                    onSuccess()
+                }
+            } catch (e: Exception) {
+                onResult("Predict Failed: ${e.message}")
+            }
+        }
+    }
+
+
 }

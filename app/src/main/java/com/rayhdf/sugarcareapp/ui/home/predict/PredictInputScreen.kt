@@ -24,11 +24,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.rayhdf.sugarcareapp.ui.theme.SugarCareAppTheme
 
 @Composable
 fun PredictInputScreen(
-    viewModel: PredictInputViewModel
+    viewModel: PredictInputViewModel,
+    navController: NavController
 ) {
     var age by rememberSaveable { mutableStateOf(viewModel.age) }
     var bloodGlucoseLevels by rememberSaveable { mutableStateOf(viewModel.bloodGlucoseLevels) }
@@ -80,12 +82,15 @@ fun PredictInputScreen(
                 item { TextFieldWithLabel("Cholesterol Levels", cholesterolLevels) { cholesterolLevels = it } }
                 item { TextFieldWithLabel("Digestive Enzyme Levels", digestiveEnzymeLevels) { digestiveEnzymeLevels = it } }
                 item { TextFieldWithLabel("Pulmonary Function", pulmonaryFunction) { pulmonaryFunction = it } }
-                item { Button(onClick = {}) {
+                item { Button(onClick = {
+                    viewModel.predict(
+                        onResult = { },
+                        onSuccess = { navController.navigate("PredictResult") }
+                    )
+                }) {
                     Text("Confirm")
                 } }
             }
-
-
         }
     }
 }
@@ -108,11 +113,4 @@ fun TextFieldWithLabel(label: String, value: String, onValueChange: (String) -> 
             )
         )
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PredictInputScreenPreview(modifier: Modifier = Modifier) {
-    val viewModel = PredictInputViewModel()
-    PredictInputScreen(viewModel)
 }

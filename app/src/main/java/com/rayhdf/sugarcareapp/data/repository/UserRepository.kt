@@ -6,6 +6,7 @@ import com.rayhdf.sugarcareapp.data.model.LoginResponse
 import com.rayhdf.sugarcareapp.data.model.PredictRequest
 import com.rayhdf.sugarcareapp.data.model.PredictResponse
 import com.rayhdf.sugarcareapp.data.model.RegisterResponse
+import com.rayhdf.sugarcareapp.data.model.TrackResponse
 
 class UserRepository {
 
@@ -17,11 +18,15 @@ class UserRepository {
         return RetrofitInstance.userApi.loginUser(email, password)
     }
 
-    suspend fun predict(request: PredictRequest): PredictResponse {
-        return RetrofitInstance.predictApi.predict(request)
+    suspend fun predict(userId: String, request: PredictRequest): PredictResponse {
+        return RetrofitInstance.predictApi.predict(userId, request)
     }
 
     suspend fun getPredictions(userId: String): GetPredictionsResponse {
         return RetrofitInstance.userApi.getPredictions(userId)
+    }
+
+    suspend fun track(userId: String, sugarIntake: Float, bodyWeight: Float): TrackResponse {
+        return RetrofitInstance.userApi.track(userId, sugarIntake, bodyWeight)
     }
 }
