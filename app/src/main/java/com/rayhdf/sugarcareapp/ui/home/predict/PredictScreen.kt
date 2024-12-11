@@ -30,7 +30,7 @@ import com.rayhdf.sugarcareapp.ui.theme.errorLight
 import com.rayhdf.sugarcareapp.ui.theme.primaryLight
 import com.rayhdf.sugarcareapp.ui.theme.surfaceContainerHighestLightHighContrast
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun PredictScreen(modifier: Modifier = Modifier) {
 
