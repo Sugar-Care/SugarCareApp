@@ -20,19 +20,28 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.rayhdf.sugarcareapp.ui.ViewModelFactory
 import com.rayhdf.sugarcareapp.ui.home.predict.LatestPrediction
 import com.rayhdf.sugarcareapp.ui.theme.SugarCareAppTheme
 
 @Composable
-fun FirstScreen(modifier: Modifier = Modifier) {
+fun FirstScreen(modifier: Modifier = Modifier, viewModel: FirstViewModel = viewModel(factory = ViewModelFactory(
+    LocalContext.current)
+)) {
+    val name by viewModel.name.observeAsState("")
+
     LazyColumn(
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.Top,
@@ -49,7 +58,7 @@ fun FirstScreen(modifier: Modifier = Modifier) {
         }
         item {
             Text(
-                "Name",
+                name,
                 style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Medium),
             )
         }

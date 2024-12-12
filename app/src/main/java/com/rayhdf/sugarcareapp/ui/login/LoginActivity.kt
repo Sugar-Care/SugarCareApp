@@ -2,6 +2,7 @@ package com.rayhdf.sugarcareapp.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -37,26 +38,54 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.lifecycleScope
+import com.rayhdf.sugarcareapp.ui.ViewModelFactory
 import com.rayhdf.sugarcareapp.ui.home.HomeActivity
 import com.rayhdf.sugarcareapp.ui.register.RegisterActivity
 import com.rayhdf.sugarcareapp.ui.theme.SugarCareAppTheme
 import com.rayhdf.sugarcareapp.ui.theme.primaryLight
 import com.rayhdf.sugarcareapp.ui.theme.tertiaryLight
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 
 
 class LoginActivity : ComponentActivity() {
-    private val viewModel: LoginViewModel by viewModels()
+    private val viewModel: LoginViewModel by viewModels {
+        ViewModelFactory(applicationContext)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
+        checkUserSession()
         setContent {
             LoginScreen(
                 viewModel = viewModel,
-                onLoginClick = { navigateToHome() },
-                onSignUpClick = { navigateToRegister() }
+                onLoginClick = { loginUser() },
+                onSignUpClick = { navigateToRegister() },
+                onBypassClick = { navigateToHome() }
             )
         }
+    }
+
+    private fun checkUserSession() {
+        lifecycleScope.launch {
+            val user = viewModel.getUserSession().first()
+            if (user.userId.isNotEmpty()) {
+                navigateToHome()
+            }
+        }
+    }
+
+    private fun loginUser() {
+        viewModel.login(
+            onSuccess = { navigateToHome() },
+            onError = { message -> showError(message) }
+        )
+    }
+
+    private fun showError(message: String) {
+        Log.d("Login Error", message)
     }
 
     private fun navigateToRegister() {
@@ -74,7 +103,8 @@ class LoginActivity : ComponentActivity() {
 fun LoginScreen(
     viewModel: LoginViewModel,
     onLoginClick: () -> Unit,
-    onSignUpClick: () -> Unit
+    onSignUpClick: () -> Unit,
+    onBypassClick: () -> Unit
 ) {
     SugarCareAppTheme {
         Column(
@@ -172,13 +202,17 @@ fun LoginScreen(
                     modifier = Modifier.clickable(onClick = onSignUpClick)
                 )
             }
+
+            Button(onClick = onBypassClick) {
+                Text("Bypass")
+            }
         }
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    val viewModel = LoginViewModel()
-    LoginScreen(viewModel = viewModel, {}, {})
-}
+//
+//@Preview(showBackground = true)
+//@Composable
+//fun DefaultPreview() {
+//    val viewModel = LoginViewModel()
+//    LoginScreen(viewModel = viewModel, {}, {})
+//}

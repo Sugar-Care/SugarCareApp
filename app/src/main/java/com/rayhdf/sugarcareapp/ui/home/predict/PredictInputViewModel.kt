@@ -12,32 +12,32 @@ import kotlinx.coroutines.launch
 
 class PredictInputViewModel(
 ) : ViewModel() {
-    var age by mutableStateOf("18")
-    var bloodGlucoseLevels by mutableStateOf("1.0")
-    var bloodPressure by mutableStateOf("1.0")
-    var weightGainDuringPregnancy by mutableStateOf("1.0")
-    var waistCircumference by mutableStateOf("1.0")
-    var bmi by mutableStateOf("1.0")
-    var insulinLevels by mutableStateOf("1.0")
-    var cholesterolLevels by mutableStateOf("1.0")
-    var digestiveEnzymeLevels by mutableStateOf("1.0")
-    var pulmonaryFunction by mutableStateOf("1.0")
+    var age by mutableStateOf("")
+    var bloodGlucoseLevels by mutableStateOf("")
+    var bloodPressure by mutableStateOf("")
+    var weightGainDuringPregnancy by mutableStateOf("")
+    var waistCircumference by mutableStateOf("")
+    var bmi by mutableStateOf("")
+    var insulinLevels by mutableStateOf("")
+    var cholesterolLevels by mutableStateOf("")
+    var digestiveEnzymeLevels by mutableStateOf("")
+    var pulmonaryFunction by mutableStateOf("")
 
     private val userRepository = UserRepository()
 
     fun toPredictRequest(): PredictRequest {
         return PredictRequest(
             input = PredictRequest.Input(
-                age = age.toInt(),
-                bloodGlucoseLevels = bloodGlucoseLevels.toDouble(),
-                bloodPressure = bloodPressure.toDouble(),
-                weightGainDuringPregnancy = weightGainDuringPregnancy.toDouble(),
-                waistCircumference = waistCircumference.toDouble(),
-                bmi = bmi.toDouble(),
-                insulinLevels = insulinLevels.toDouble(),
-                cholesterolLevels = cholesterolLevels.toDouble(),
-                digestiveEnzymeLevels = digestiveEnzymeLevels.toDouble(),
-                pulmonaryFunction = pulmonaryFunction.toDouble()
+                age = age.toIntOrNull() ?: 18,
+                bloodGlucoseLevels = bloodGlucoseLevels.toDoubleOrNull() ?: 1.0,
+                bloodPressure = bloodPressure.toDoubleOrNull() ?: 1.0,
+                weightGainDuringPregnancy = weightGainDuringPregnancy.toDoubleOrNull() ?: 1.0,
+                waistCircumference = waistCircumference.toDoubleOrNull() ?: 1.0,
+                bmi = bmi.toDoubleOrNull() ?: 1.0,
+                insulinLevels = insulinLevels.toDoubleOrNull() ?: 1.0,
+                cholesterolLevels = cholesterolLevels.toDoubleOrNull() ?: 1.0,
+                digestiveEnzymeLevels = digestiveEnzymeLevels.toDoubleOrNull() ?: 1.0,
+                pulmonaryFunction = pulmonaryFunction.toDoubleOrNull() ?: 1.0
             )
         )
     }
@@ -45,6 +45,7 @@ class PredictInputViewModel(
     fun predict(onResult: (String) -> Unit, onSuccess: () -> Unit) {
         viewModelScope.launch {
             try {
+                Log.d("Predict", "${toPredictRequest()}")
                 val userId = "MOkL2e0ZDUf8zboWxZvc"
                 val response = userRepository.predict(userId, toPredictRequest())
                 if (response.result?.message == "Prediction stored successfully") {

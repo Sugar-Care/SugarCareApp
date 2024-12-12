@@ -85,7 +85,11 @@ fun PredictInputScreen(
                 item { Button(onClick = {
                     viewModel.predict(
                         onResult = { },
-                        onSuccess = { navController.navigate("PredictResult") }
+                        onSuccess = {
+                            navController.navigate("Predict") {
+                                popUpTo("PredictInput") { inclusive = true }
+                            }
+                        }
                     )
                 }) {
                     Text("Confirm")
