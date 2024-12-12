@@ -14,7 +14,7 @@ data class GetPredictionsResponse(
 data class Prediction(
 
 	@field:SerializedName("probability")
-	val probability: Any? = null,
+	val probability: Float? = null,
 
 	@field:SerializedName("label")
 	val label: String? = null

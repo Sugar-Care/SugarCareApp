@@ -70,7 +70,6 @@ fun FirstScreen(modifier: Modifier = Modifier, viewModel: FirstViewModel = viewM
             )
         }
         item { Spacer(modifier = Modifier.height(8.dp)) }
-        item { LatestPrediction() }
         item { Spacer(modifier = Modifier.height(8.dp)) }
         item {
             Card(

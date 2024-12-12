@@ -28,7 +28,7 @@ fun PredictionHistory(
 ) {
     Card(
         modifier = modifier
-            .border(1.dp, Color.Gray, RoundedCornerShape(8.dp)),
+            .border(1.dp, Color.Transparent, RoundedCornerShape(8.dp)),
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(containerColor = surfaceContainerHighestLightHighContrast)
     ) {
