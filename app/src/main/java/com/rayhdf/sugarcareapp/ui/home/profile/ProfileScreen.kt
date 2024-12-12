@@ -17,17 +17,24 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.rayhdf.sugarcareapp.data.preferences.UserPreference
+import com.rayhdf.sugarcareapp.data.preferences.dataStore
+import com.rayhdf.sugarcareapp.ui.ViewModelFactory
 import com.rayhdf.sugarcareapp.ui.composables.CustomTextField
 import com.rayhdf.sugarcareapp.ui.theme.SugarCareAppTheme
 import com.rayhdf.sugarcareapp.ui.theme.primaryLight
 
 @Composable
-fun ProfileScreen(modifier: Modifier = Modifier, viewModel: ProfileViewModel = viewModel()) {
+fun ProfileScreen(modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+    val viewModel: ProfileViewModel = viewModel(factory = ViewModelFactory(context))
+
     Column(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -38,7 +45,7 @@ fun ProfileScreen(modifier: Modifier = Modifier, viewModel: ProfileViewModel = v
             contentDescription = "Profile Icon",
             modifier = Modifier.size(48.dp)
         )
-        Text("Your Name", fontSize = 24.sp,
+        Text(viewModel.name, fontSize = 24.sp,
             fontWeight = FontWeight.Bold)
 
         Spacer(modifier = Modifier.height(16.dp))

@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId = "com.rayhdf.sugarcareapp"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -81,4 +81,6 @@ dependencies {
 
     implementation("androidx.navigation:navigation-compose:2.8.4")
     implementation("androidx.compose.material:material:1.7.5")
+
+    implementation("co.yml:ycharts:2.1.0")
 }
