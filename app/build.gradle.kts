@@ -83,4 +83,6 @@ dependencies {
     implementation("androidx.compose.material:material:1.7.5")
 
     implementation("co.yml:ycharts:2.1.0")
+
+    implementation("com.google.ai.client.generativeai:generativeai:0.7.0")
 }

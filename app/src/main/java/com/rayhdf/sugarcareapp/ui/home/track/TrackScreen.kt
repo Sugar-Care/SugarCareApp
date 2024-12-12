@@ -51,6 +51,7 @@ fun TrackScreen(modifier: Modifier, ) {
     val viewModel: TrackViewModel = viewModel(factory = ViewModelFactory(context))
     val recentTracks by viewModel.recentTracks.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
+    val recommendations by viewModel.recommendations.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.getTracks()
@@ -156,8 +157,13 @@ fun TrackScreen(modifier: Modifier, ) {
                         Spacer(Modifier.width(16.dp))
                         Button(
                             modifier = Modifier,
-                            onClick = { }
+                            onClick = { viewModel.getRecommendations() }
                         ) { Text("Get Recommendations") }
+                    }
+                }
+                item {
+                    recommendations?.let {
+                        Text("Recommendations: $it", modifier = Modifier.padding(16.dp))
                     }
                 }
             }

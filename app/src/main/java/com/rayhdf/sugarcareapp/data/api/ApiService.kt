@@ -52,7 +52,8 @@ interface ApiService {
 
     // Tracking
 
-    @POST("track/{userid}")
+    @FormUrlEncoded
+    @POST("track/{userId}")
     suspend fun track(
         @Path("userId") userId: String,
         @Field("sugarIntake") sugarIntake: Float,

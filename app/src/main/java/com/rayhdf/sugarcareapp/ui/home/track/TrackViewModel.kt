@@ -7,6 +7,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.ai.client.generativeai.GenerativeModel
+import com.google.ai.client.generativeai.type.BlockThreshold
+import com.google.ai.client.generativeai.type.GenerateContentResponse
+import com.google.ai.client.generativeai.type.HarmCategory
+import com.google.ai.client.generativeai.type.SafetySetting
+import com.google.ai.client.generativeai.type.content
+import com.google.ai.client.generativeai.type.generationConfig
+import com.rayhdf.sugarcareapp.BuildConfig
 import com.rayhdf.sugarcareapp.data.model.TrackingItem
 import com.rayhdf.sugarcareapp.data.preferences.UserPreference
 import com.rayhdf.sugarcareapp.data.preferences.dataStore
@@ -94,12 +102,43 @@ class TrackViewModel(context: Context) : ViewModel() {
         }
     }
 
+
+    val model = GenerativeModel(
+        "gemini-1.5-flash",
+        BuildConfig.geminiKey,
+        generationConfig = generationConfig {
+            temperature = 1.0f
+            topK = 32
+            topP = 1f
+            maxOutputTokens = 2048
+        },
+        safetySettings = listOf(
+            SafetySetting(HarmCategory.HARASSMENT, BlockThreshold.MEDIUM_AND_ABOVE),
+            SafetySetting(HarmCategory.HATE_SPEECH, BlockThreshold.MEDIUM_AND_ABOVE),
+            SafetySetting(HarmCategory.SEXUALLY_EXPLICIT, BlockThreshold.MEDIUM_AND_ABOVE),
+            SafetySetting(HarmCategory.DANGEROUS_CONTENT, BlockThreshold.MEDIUM_AND_ABOVE),
+        )
+    )
+
+    private val _recommendations = MutableStateFlow<String?>(null)
+    val recommendations: StateFlow<String?> = _recommendations
+
     fun getRecommendations() {
         viewModelScope.launch {
             try {
-
+                val trackDataString = recentTracks.value.joinToString(", ") { track ->
+                    "createdAt=${track.data?.createdAt}, sugarIntake=${track.data?.sugarIntake}, bodyWeight=${track.data?.bodyWeight}"
+                }
+                val response = model.generateContent(
+                    content {
+                        text("Based on the data from my tracking: $trackDataString, " +
+                                "give me recommendations on what dietary or lifestyle changes I should make. " +
+                                "The answer should be straight to the point.")
+                    }
+                )
+                _recommendations.value = response.text
             } catch (e: Exception) {
-
+                Log.e("Get Recommendations", "Error: $e")
             }
         }
     }

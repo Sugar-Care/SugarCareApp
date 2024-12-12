@@ -2,6 +2,7 @@ package com.rayhdf.sugarcareapp.data.repository
 
 import com.rayhdf.sugarcareapp.data.api.RetrofitInstance
 import com.rayhdf.sugarcareapp.data.model.GetPredictionsResponse
+import com.rayhdf.sugarcareapp.data.model.GetTracksResponse
 import com.rayhdf.sugarcareapp.data.model.LoginResponse
 import com.rayhdf.sugarcareapp.data.model.PredictRequest
 import com.rayhdf.sugarcareapp.data.model.PredictResponse
@@ -28,5 +29,9 @@ class UserRepository {
 
     suspend fun track(userId: String, sugarIntake: Float, bodyWeight: Float): TrackResponse {
         return RetrofitInstance.userApi.track(userId, sugarIntake, bodyWeight)
+    }
+
+    suspend fun getTracks(userId: String): GetTracksResponse {
+        return RetrofitInstance.userApi.getTracks(userId)
     }
 }
