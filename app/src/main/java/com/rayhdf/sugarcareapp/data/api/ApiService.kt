@@ -3,6 +3,7 @@ package com.rayhdf.sugarcareapp.data.api
 import com.rayhdf.sugarcareapp.data.model.GetPredictionsResponse
 import com.rayhdf.sugarcareapp.data.model.GetTracksResponse
 import com.rayhdf.sugarcareapp.data.model.LoginResponse
+import com.rayhdf.sugarcareapp.data.model.NewsResponse
 import com.rayhdf.sugarcareapp.data.model.PredictRequest
 import com.rayhdf.sugarcareapp.data.model.PredictResponse
 import com.rayhdf.sugarcareapp.data.model.RegisterResponse
@@ -14,6 +15,7 @@ import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface ApiService {
 
@@ -52,7 +54,8 @@ interface ApiService {
 
     // Tracking
 
-    @POST("track/{userid}")
+    @FormUrlEncoded
+    @POST("track/{userId}")
     suspend fun track(
         @Path("userId") userId: String,
         @Field("sugarIntake") sugarIntake: Float,
@@ -67,6 +70,14 @@ interface ApiService {
         @Path("userId") userId: String,
         @Path("trackId") trackId: String
     )
+
+    // News
+    @GET("everything")
+    suspend fun getNews(
+        @Query("q") query: String,
+        @Query("apiKey") apiKey: String,
+        @Query("pageSize") pageSize: Int,
+    ): NewsResponse
 
 
 }
