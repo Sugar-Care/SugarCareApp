@@ -4,6 +4,7 @@ import com.rayhdf.sugarcareapp.data.api.RetrofitInstance
 import com.rayhdf.sugarcareapp.data.model.GetPredictionsResponse
 import com.rayhdf.sugarcareapp.data.model.GetTracksResponse
 import com.rayhdf.sugarcareapp.data.model.LoginResponse
+import com.rayhdf.sugarcareapp.data.model.NewsResponse
 import com.rayhdf.sugarcareapp.data.model.PredictRequest
 import com.rayhdf.sugarcareapp.data.model.PredictResponse
 import com.rayhdf.sugarcareapp.data.model.RegisterResponse
@@ -33,5 +34,9 @@ class UserRepository {
 
     suspend fun getTracks(userId: String): GetTracksResponse {
         return RetrofitInstance.userApi.getTracks(userId)
+    }
+
+    suspend fun getNews(query: String, apiKey: String, pageSize: Int): NewsResponse {
+        return RetrofitInstance.newsApi.getNews(query, apiKey, pageSize)
     }
 }
