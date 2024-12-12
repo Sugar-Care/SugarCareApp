@@ -2,6 +2,7 @@ package com.rayhdf.sugarcareapp.ui.home.first
 
 import android.widget.ImageView
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -40,6 +41,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.bumptech.glide.Glide
 import com.rayhdf.sugarcareapp.data.model.ArticlesItem
 import com.rayhdf.sugarcareapp.ui.ViewModelFactory
+import com.rayhdf.sugarcareapp.ui.composables.TrackChart
 import com.rayhdf.sugarcareapp.ui.home.predict.LatestPrediction
 import com.rayhdf.sugarcareapp.ui.theme.SugarCareAppTheme
 
@@ -49,9 +51,11 @@ fun FirstScreen(modifier: Modifier = Modifier, viewModel: FirstViewModel = viewM
 )) {
     val name by viewModel.name.observeAsState("")
     val news by viewModel.news.collectAsState()
+    val recentTracks by viewModel.recentTracks.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.getNews()
+        viewModel.getTracks()
     }
 
     LazyColumn(
@@ -87,33 +91,13 @@ fun FirstScreen(modifier: Modifier = Modifier, viewModel: FirstViewModel = viewM
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp)
+                    .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp))
             ) {
                 Box(
                     contentAlignment = Alignment.TopStart,
                     modifier = Modifier.fillMaxSize()
                 ) {
-                    Row(
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        Text(
-                            "Sugar Intake",
-                            fontSize = 24.sp,
-                            fontWeight = FontWeight.Medium,
-                            modifier = Modifier
-                                .padding(16.dp)
-                        )
-                        Icon(
-                            imageVector = Icons.Default.Add,
-                            contentDescription = "Add blood sugar data button",
-                            modifier = Modifier
-                                .padding(16.dp)
-                                .clickable {
-                                    // TODO: 'Add' blood sugar function
-                                }
-                        )
-                    }
+                    TrackChart("Sugar Intake", recentTracks) { it.sugarIntake?.toFloat() }
                 }
             }
         }
