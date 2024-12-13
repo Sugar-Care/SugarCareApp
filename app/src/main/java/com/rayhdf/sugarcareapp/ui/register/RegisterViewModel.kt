@@ -9,9 +9,11 @@ import com.rayhdf.sugarcareapp.data.repository.UserRepository
 import kotlinx.coroutines.launch
 
 class RegisterViewModel : ViewModel() {
-    var name by mutableStateOf("Your Name")
-    var email by mutableStateOf("example@gmail.com")
-    var password by mutableStateOf("********")
+    var name by mutableStateOf("")
+    var email by mutableStateOf("")
+    var password by mutableStateOf("")
+
+    var passwordVisible by mutableStateOf(false)
 
     private val userRepository = UserRepository()
 

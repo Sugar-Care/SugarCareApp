@@ -15,9 +15,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Visibility
+import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,12 +33,14 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.rayhdf.sugarcareapp.ui.composables.CustomTextField
-import com.rayhdf.sugarcareapp.ui.home.HomeActivity
+import com.rayhdf.sugarcareapp.ui.login.LoginActivity
 import com.rayhdf.sugarcareapp.ui.theme.SugarCareAppTheme
 
 class RegisterActivity : ComponentActivity() {
@@ -41,13 +50,14 @@ class RegisterActivity : ComponentActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContent {
-            RegisterScreen(viewModel = viewModel, onSuccess = { navigateToHome() })
+            RegisterScreen(viewModel = viewModel, onSuccess = { navigateToLogin() })
         }
 
     }
 
-    private fun navigateToHome() {
-        val intent = Intent(this@RegisterActivity, HomeActivity::class.java)
+    private fun navigateToLogin() {
+        val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
     }
 }
@@ -63,7 +73,6 @@ fun RegisterScreen(viewModel: RegisterViewModel, onSuccess: () -> Unit) {
             modifier = Modifier
                 .fillMaxSize()
                 .background(color = MaterialTheme.colorScheme.background)
-                .padding(16.dp)
         ) {
             Text("Let's get started",
                 fontSize = 36.sp,
@@ -72,28 +81,75 @@ fun RegisterScreen(viewModel: RegisterViewModel, onSuccess: () -> Unit) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            CustomTextField(
-                label = "Name",
-                value = viewModel.name,
-                onValueChange = { viewModel.name = it }
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            CustomTextField(
-                label = "Email",
-                value = viewModel.email,
-                onValueChange = { viewModel.email = it }
-            )
-            Spacer(modifier = Modifier.height(16.dp))
-            CustomTextField(
-                label = "Password",
-                value = viewModel.password,
-                onValueChange = { viewModel.password = it }
-            )
+            Column(
+                horizontalAlignment = Alignment.Start,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 32.dp, vertical = 8.dp)
+            ) {
+                Text("Name")
+                Spacer(modifier = Modifier.height(4.dp))
+                TextField(
+                    value = viewModel.name,
+                    onValueChange = { viewModel.name = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = TextFieldDefaults.colors(
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent
+                    )
+                )
+            }
+
+
+            Column(
+                horizontalAlignment = Alignment.Start,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 32.dp, vertical = 8.dp)
+            ) {
+                Text("Email")
+                Spacer(modifier = Modifier.height(4.dp))
+                TextField(
+                    value = viewModel.email,
+                    onValueChange = { viewModel.email = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = TextFieldDefaults.colors(
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent
+                    )
+                )
+            }
+
+            Column(
+                horizontalAlignment = Alignment.Start,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 32.dp, vertical = 8.dp)
+            ) {
+                Text("Password")
+                Spacer(modifier = Modifier.height(4.dp))
+                TextField(
+                    value = viewModel.password,
+                    onValueChange = { viewModel.password = it },
+                    modifier = Modifier.fillMaxWidth(),
+                    visualTransformation = if (viewModel.passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                    trailingIcon = {
+                        val image = if (viewModel.passwordVisible) Icons.Filled.Visibility else Icons.Filled.VisibilityOff
+                        IconButton(onClick = { viewModel.passwordVisible = !viewModel.passwordVisible }) {
+                            Icon(imageVector = image, contentDescription = null)
+                        }
+                    },
+                    colors = TextFieldDefaults.colors(
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent
+                    )
+                )
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
 
             Row(
-                horizontalArrangement = Arrangement.End,
+                horizontalArrangement = Arrangement.Center,
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Button(onClick = {

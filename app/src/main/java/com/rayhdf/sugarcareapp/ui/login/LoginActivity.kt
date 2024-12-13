@@ -20,6 +20,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.HealthAndSafety
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
@@ -63,7 +64,6 @@ class LoginActivity : ComponentActivity() {
                 viewModel = viewModel,
                 onLoginClick = { loginUser() },
                 onSignUpClick = { navigateToRegister() },
-                onBypassClick = { navigateToHome() }
             )
         }
     }
@@ -104,7 +104,6 @@ fun LoginScreen(
     viewModel: LoginViewModel,
     onLoginClick: () -> Unit,
     onSignUpClick: () -> Unit,
-    onBypassClick: () -> Unit
 ) {
     SugarCareAppTheme {
         Column(
@@ -126,7 +125,7 @@ fun LoginScreen(
                 )
             )
             Icon(
-                imageVector = Icons.Default.Favorite,
+                imageVector = Icons.Default.HealthAndSafety,
                 contentDescription = "Logo",
                 tint = tertiaryLight,
                 modifier = Modifier.size(48.dp)
@@ -201,10 +200,6 @@ fun LoginScreen(
                     style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.SemiBold),
                     modifier = Modifier.clickable(onClick = onSignUpClick)
                 )
-            }
-
-            Button(onClick = onBypassClick) {
-                Text("Bypass")
             }
         }
     }

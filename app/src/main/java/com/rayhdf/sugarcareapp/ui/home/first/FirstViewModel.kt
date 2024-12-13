@@ -36,6 +36,9 @@ class FirstViewModel(context: Context) : ViewModel() {
     private val _recentTracks = MutableStateFlow<List<TrackingItem>>(emptyList())
     val recentTracks: StateFlow<List<TrackingItem>> = _recentTracks
 
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading
+
     private val apiKey = BuildConfig.newsKey
 
     init {
@@ -58,12 +61,15 @@ class FirstViewModel(context: Context) : ViewModel() {
 
     fun getNews() {
         viewModelScope.launch {
+            _isLoading.value = true
             try {
                 val response = userRepository.getNews("diabetes", apiKey, 1)
                 Log.d("News API", "response: $response")
                 _news.value = response.articles?.firstOrNull()?.let { listOf(it) } ?: emptyList()
             } catch (e: Exception) {
                 Log.d("News API", "Error: $e")
+            } finally {
+                _isLoading.value = false
             }
         }
     }
