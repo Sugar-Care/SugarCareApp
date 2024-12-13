@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.AlertDialog
@@ -38,6 +39,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -67,13 +69,15 @@ fun TrackScreen(modifier: Modifier, ) {
                     TextField(
                         value = viewModel.sugarIntake,
                         onValueChange = { viewModel.sugarIntake = it },
-                        label = { Text("Sugar Intake") }
+                        label = { Text("Sugar Intake") },
+                        keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     TextField(
                         value = viewModel.weight,
                         onValueChange = { viewModel.weight = it },
-                        label = { Text("Weight") }
+                        label = { Text("Weight") },
+                        keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                     )
                 }
             },
