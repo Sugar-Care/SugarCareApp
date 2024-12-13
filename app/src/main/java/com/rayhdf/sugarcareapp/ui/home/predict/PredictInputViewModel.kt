@@ -38,15 +38,15 @@ class PredictInputViewModel(context: Context) : ViewModel() {
         return PredictRequest(
             input = PredictRequest.Input(
                 age = age.toIntOrNull() ?: 18,
-                bloodGlucoseLevels = bloodGlucoseLevels.toDoubleOrNull() ?: 1.0,
-                bloodPressure = bloodPressure.toDoubleOrNull() ?: 1.0,
-                weightGainDuringPregnancy = weightGainDuringPregnancy.toDoubleOrNull() ?: 1.0,
-                waistCircumference = waistCircumference.toDoubleOrNull() ?: 1.0,
-                bmi = bmi.toDoubleOrNull() ?: 1.0,
-                insulinLevels = insulinLevels.toDoubleOrNull() ?: 1.0,
-                cholesterolLevels = cholesterolLevels.toDoubleOrNull() ?: 1.0,
-                digestiveEnzymeLevels = digestiveEnzymeLevels.toDoubleOrNull() ?: 1.0,
-                pulmonaryFunction = pulmonaryFunction.toDoubleOrNull() ?: 1.0
+                bloodGlucoseLevels = bloodGlucoseLevels.toDoubleOrNull() ?: 121.0,
+                bloodPressure = bloodPressure.toDoubleOrNull() ?: 99.0,
+                weightGainDuringPregnancy = weightGainDuringPregnancy.toDoubleOrNull() ?: 7.0,
+                waistCircumference = waistCircumference.toDoubleOrNull() ?: 30.0,
+                bmi = bmi.toDoubleOrNull() ?: 20.0,
+                insulinLevels = insulinLevels.toDoubleOrNull() ?: 13.0,
+                cholesterolLevels = cholesterolLevels.toDoubleOrNull() ?: 163.0,
+                digestiveEnzymeLevels = digestiveEnzymeLevels.toDoubleOrNull() ?: 31.0,
+                pulmonaryFunction = pulmonaryFunction.toDoubleOrNull() ?: 63.0
             )
         )
     }

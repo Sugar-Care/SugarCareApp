@@ -80,7 +80,7 @@ fun PredictInputScreen(
                     .fillMaxSize()
             ) {
                 Text("Your Data", style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.SemiBold))
-                Text("Please input your latest data")
+                Text("Leave empty if unknown")
 
                 LazyColumn(
                     horizontalAlignment = Alignment.Start,

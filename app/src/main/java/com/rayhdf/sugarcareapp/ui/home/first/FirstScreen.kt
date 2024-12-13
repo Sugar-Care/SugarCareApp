@@ -108,7 +108,7 @@ fun FirstScreen(modifier: Modifier = Modifier, viewModel: FirstViewModel = viewM
                         contentAlignment = Alignment.TopStart,
                         modifier = Modifier.fillMaxSize()
                     ) {
-                        TrackChart("Sugar Intake", recentTracks) { it.sugarIntake?.toFloat() }
+                        TrackChart("Sugar Intake (gr)", recentTracks) { it.sugarIntake?.toFloat() }
                     }
                 }
             }

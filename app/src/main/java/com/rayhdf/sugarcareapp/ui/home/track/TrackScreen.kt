@@ -81,7 +81,7 @@ fun TrackScreen(modifier: Modifier, ) {
                 Button(
                     onClick = {
                         viewModel.track(
-                            onResult = { message -> Log.d("Predict screen", "$message")},
+                            onResult = { message -> Log.d("Track screen", "$message")},
                             onSuccess = {
                                 viewModel.showDialog = false
                                 viewModel.getTracks()
@@ -137,7 +137,7 @@ fun TrackScreen(modifier: Modifier, ) {
                             contentAlignment = Alignment.TopStart,
                             modifier = Modifier.fillMaxSize()
                         ) {
-                            TrackChart("Sugar Intake", recentTracks) { it.sugarIntake?.toFloat() }
+                            TrackChart("Sugar Intake (gr)", recentTracks) { it.sugarIntake?.toFloat() }
                         }
                     }
                 }
@@ -150,7 +150,7 @@ fun TrackScreen(modifier: Modifier, ) {
                             .heightIn(300.dp)
                             .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp))
                     ) {
-                        TrackChart("Weight", recentTracks) { it.bodyWeight?.toFloat() }
+                        TrackChart("Weight (kg)", recentTracks) { it.bodyWeight?.toFloat() }
                     }
                 }
                 item { Spacer(modifier = Modifier.height(16.dp)) }
