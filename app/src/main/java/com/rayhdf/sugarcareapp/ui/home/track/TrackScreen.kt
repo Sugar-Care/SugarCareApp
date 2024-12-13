@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -81,7 +82,10 @@ fun TrackScreen(modifier: Modifier, ) {
                     onClick = {
                         viewModel.track(
                             onResult = { message -> Log.d("Predict screen", "$message")},
-                            onSuccess = { viewModel.showDialog = false}
+                            onSuccess = {
+                                viewModel.showDialog = false
+                                viewModel.getTracks()
+                            }
                         )
                     }
                 ) {
@@ -126,6 +130,7 @@ fun TrackScreen(modifier: Modifier, ) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .weight(1f)
+                            .heightIn(300.dp)
                             .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp))
                     ) {
                         Box(
@@ -142,6 +147,7 @@ fun TrackScreen(modifier: Modifier, ) {
                         modifier = Modifier
                             .fillMaxWidth()
                             .weight(1f)
+                            .heightIn(300.dp)
                             .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp))
                     ) {
                         TrackChart("Weight", recentTracks) { it.bodyWeight?.toFloat() }

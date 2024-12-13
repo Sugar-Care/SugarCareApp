@@ -272,7 +272,7 @@ fun SugarCareAppTheme(
   }
 
   MaterialTheme(
-    colorScheme = colorScheme,
+    colorScheme = lightScheme,
     typography = AppTypography,
     content = content
   )

@@ -15,7 +15,6 @@ class ProfileViewModel(context: Context) : ViewModel() {
 
     var name by mutableStateOf("")
     var email by mutableStateOf("")
-    var password by mutableStateOf("")
 
     init {
         viewModelScope.launch {
@@ -23,6 +22,13 @@ class ProfileViewModel(context: Context) : ViewModel() {
                 name = user.name
                 email = user.email
             }
+        }
+    }
+
+    fun logout(onLogout: () -> Unit) {
+        viewModelScope.launch {
+            userPreference.logout()
+            onLogout()
         }
     }
 }

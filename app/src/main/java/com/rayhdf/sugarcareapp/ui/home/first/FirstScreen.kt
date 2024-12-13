@@ -1,5 +1,7 @@
 package com.rayhdf.sugarcareapp.ui.home.first
 
+import android.content.Intent
+import android.net.Uri
 import android.widget.ImageView
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -20,6 +22,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -54,87 +57,104 @@ fun FirstScreen(modifier: Modifier = Modifier, viewModel: FirstViewModel = viewM
     val news by viewModel.news.collectAsState()
     val recentTracks by viewModel.recentTracks.collectAsState()
 
+    val isLoading by viewModel.isLoading.collectAsState()
+
     LaunchedEffect(Unit) {
         viewModel.getNews()
         viewModel.getTracks()
     }
 
-    LazyColumn(
-        horizontalAlignment = Alignment.Start,
-        verticalArrangement = Arrangement.Top,
+    Box(
+        contentAlignment = Alignment.Center,
         modifier = modifier
             .fillMaxSize()
             .background(color = MaterialTheme.colorScheme.background)
             .padding(top = 32.dp)
     ) {
-        item {
-            Text(
-                "Greetings,",
-                style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Normal),
-            )
-        }
-        item {
-            Text(
-                name,
-                style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Medium),
-            )
-        }
-        item { Spacer(modifier = Modifier.height(24.dp)) }
-        item {
-            Text(
-                "Recent activities",
-                style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Normal),
-            )
-        }
-        item { Spacer(modifier = Modifier.height(8.dp)) }
-        item { Spacer(modifier = Modifier.height(8.dp)) }
-        item {
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .heightIn(300.dp)
-                    .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp))
-            ) {
-                Box(
-                    contentAlignment = Alignment.TopStart,
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    TrackChart("Sugar Intake", recentTracks) { it.sugarIntake?.toFloat() }
-                }
-            }
-        }
-        item { Spacer(modifier = Modifier.height(8.dp)) }
-        item {
-            Text(
-                "Latest news on diabetes",
-                style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Medium)
-            )
-        }
-        item { Spacer(modifier = Modifier.height(8.dp)) }
-        if (news.isEmpty()) {
+        LazyColumn(
+            horizontalAlignment = Alignment.Start,
+            verticalArrangement = Arrangement.Top,
+            modifier = Modifier.fillMaxSize()
+        ) {
             item {
                 Text(
-                    "No News Today",
-                    style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Normal),
-                    modifier = Modifier.padding(16.dp)
+                    "Greetings,",
+                    style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Normal),
                 )
             }
-        } else {
-            items(news) { article ->
-                article.let {
-                    NewsCard(news = it)
+            item {
+                Text(
+                    name,
+                    style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Medium),
+                )
+            }
+            item { Spacer(modifier = Modifier.height(24.dp)) }
+            item {
+                Text(
+                    "Recent activities",
+                    style = MaterialTheme.typography.headlineSmall.copy(fontWeight = FontWeight.Normal),
+                )
+            }
+            item { Spacer(modifier = Modifier.height(8.dp)) }
+            item { Spacer(modifier = Modifier.height(8.dp)) }
+            item {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(300.dp)
+                        .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp))
+                ) {
+                    Box(
+                        contentAlignment = Alignment.TopStart,
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        TrackChart("Sugar Intake", recentTracks) { it.sugarIntake?.toFloat() }
+                    }
                 }
             }
+            item { Spacer(modifier = Modifier.height(8.dp)) }
+            item {
+                Text(
+                    "Latest news on diabetes",
+                    style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Medium)
+                )
+            }
+            item { Spacer(modifier = Modifier.height(8.dp)) }
+            if (news.isEmpty()) {
+                item {
+                    Text(
+                        "No News Today",
+                        style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Normal),
+                        modifier = Modifier.padding(16.dp)
+                    )
+                }
+            } else {
+                items(news) { article ->
+                    article.let {
+                        NewsCard(news = it)
+                    }
+                }
+            }
+        }
+
+        if (isLoading) {
+            CircularProgressIndicator()
         }
     }
 }
 
 @Composable
 fun NewsCard(news: ArticlesItem, modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .height(200.dp),
+            .height(200.dp)
+            .clickable {
+                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(news.url))
+                context.startActivity(intent)
+            },
         shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 4.dp

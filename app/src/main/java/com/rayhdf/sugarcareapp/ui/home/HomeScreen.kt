@@ -74,7 +74,7 @@ fun HomeScreen(modifier: Modifier = Modifier, homeViewModel: HomeViewModel = vie
                 composable("Track") { TrackScreen(modifier) }
                 composable("Predict") { PredictScreen(modifier, navController) }
                 composable("Profile") { ProfileScreen(modifier) }
-                composable("PredictInput") { PredictInputScreen(viewModel = remember { PredictInputViewModel() }, navController = navController)  }
+                composable("PredictInput") { PredictInputScreen(navController)  }
                 composable("PredictResult") { PredictResultScreen(modifier) }
             }
         }

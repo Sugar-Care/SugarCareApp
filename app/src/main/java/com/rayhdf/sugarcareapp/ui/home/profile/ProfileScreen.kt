@@ -1,5 +1,6 @@
 package com.rayhdf.sugarcareapp.ui.home.profile
 
+import android.content.Intent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -11,8 +12,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -27,7 +30,9 @@ import com.rayhdf.sugarcareapp.data.preferences.UserPreference
 import com.rayhdf.sugarcareapp.data.preferences.dataStore
 import com.rayhdf.sugarcareapp.ui.ViewModelFactory
 import com.rayhdf.sugarcareapp.ui.composables.CustomTextField
+import com.rayhdf.sugarcareapp.ui.login.LoginActivity
 import com.rayhdf.sugarcareapp.ui.theme.SugarCareAppTheme
+import com.rayhdf.sugarcareapp.ui.theme.errorLight
 import com.rayhdf.sugarcareapp.ui.theme.primaryLight
 
 @Composable
@@ -56,13 +61,7 @@ fun ProfileScreen(modifier: Modifier = Modifier) {
             value = viewModel.email,
             onValueChange = { viewModel.email = it },
             label = "Email",
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-        CustomTextField(
-            value = viewModel.password,
-            onValueChange = { viewModel.password = it },
-            label = "Password",
+            enabled = false
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -71,9 +70,16 @@ fun ProfileScreen(modifier: Modifier = Modifier) {
             horizontalArrangement = Arrangement.End,
             modifier = Modifier.fillMaxWidth()) {
             Button(
-                onClick = {},
+                onClick = {
+                    viewModel.logout {
+                        val intent = Intent(context, LoginActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        context.startActivity(intent)
+                    }
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = errorLight)
             ) {
-                Text("Save")
+                Text("Log out")
             }
         }
 
